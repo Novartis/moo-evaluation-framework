@@ -1,0 +1,102 @@
+seed = 2
+run_type = "staged_learning"
+device = "cuda:0"
+tb_logdir = "PDE10Aconfigscaffold13_libinvent_cs_1"
+json_out_config = "_PDE10Aconfigscaffold13_libinvent_cs_1.json"
+
+[parameters]
+
+prior_file = "libinvent.prior"
+agent_file = "libinvent.prior"
+summary_csv_prefix = "PDE10Aconfigscaffold13_libinvent_cs_1"
+    
+smiles_file = "scaffolds_13.smi"
+            
+batch_size = 50
+
+use_checkpoint = false
+
+[learning_strategy]
+
+type = "dap"
+sigma = 128
+rate = 0.0001
+    
+[diversity_filter]
+ 
+type = "PenalizeSameSmiles"
+penalty_multiplier = 0.5
+    
+[[stage]]
+
+max_score = 1.0
+max_steps = 300
+
+chkpt_file = 'PDE10Aconfigscaffold13_libinvent_cs_1.chkpt'
+
+[stage.scoring]
+type = "chebyshev_scalarization"
+
+indicator_based = 0
+
+[[stage.scoring.component]]
+[stage.scoring.component.QED]
+[[stage.scoring.component.QED.endpoint]]
+name = "QED"
+weight = 0.5
+
+[[stage.scoring.component]]
+[stage.scoring.component.SAScore]
+[[stage.scoring.component.SAScore.endpoint]]
+name = "SA score"
+weight = 0.5
+transform.type = "reverse_sigmoid"
+transform.high = 10
+transform.low = 1
+transform.k = 0.5
+
+[[stage.scoring.component]]
+[stage.scoring.component.SKLearnModel]
+[[stage.scoring.component.SKLearnModel.endpoint]]
+name = "Solubility"
+weight = 0.5
+params.model_file = './solubility_rf.pkl'
+
+[[stage.scoring.component]]
+[stage.scoring.component.SKLearnModel]
+[[stage.scoring.component.SKLearnModel.endpoint]]
+name = "Lipophilicity"
+weight = 0.5
+params.model_file = './lipophilicity_rf.pkl'
+transform.type = "reverse_sigmoid"
+transform.high = 3
+transform.low = 1
+transform.k = 0.5
+
+[[stage.scoring.component]]
+[stage.scoring.component.SKLearnModel]
+[[stage.scoring.component.SKLearnModel.endpoint]]
+name = "Permeability"
+weight = 0.5
+transform.type = "sigmoid"
+transform.high = -4.5
+transform.low = -5.8
+transform.k = 0.5
+params.model_file = './permeability_rf.pkl'
+params.is_regressor = 1
+params.ecfp_radius = 2
+params.ecfp_size = 2048
+
+[[stage.scoring.component]]
+[stage.scoring.component.SKLearnModel]
+[[stage.scoring.component.SKLearnModel.endpoint]]
+name = "PDE10A"
+weight = 0.5
+transform.type = "sigmoid"
+transform.high = 7
+transform.low = 6
+transform.k = 0.5
+params.model_file = './potency_rf.pkl'
+params.is_regressor = 1
+params.ecfp_radius = 3
+params.ecfp_size = 2048
