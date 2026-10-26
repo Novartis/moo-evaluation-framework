@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import seaborn as sns
-from scipy.stats import f_oneway
+from scipy.stats import friedmanchisquare
 
 from .config import PlotConfig
 
@@ -63,7 +63,7 @@ class MOOPlots:
           optional parameters, and return Optional[plt.Figure].
         - When plots_path is None, figures remain open for further customization.
         - When plots_path is set, figures are automatically saved and closed.
-        - Statistical tests (ANOVA) are performed automatically in summary plots.
+        - Statistical tests (Friedman test) are performed automatically in summary plots.
     """
 
     def __init__(self, config: PlotConfig) -> None:
@@ -424,7 +424,7 @@ class MOOPlots:
         Create comprehensive evaluation summary with statistical comparisons.
 
         Generates publication-quality plots comparing MOO methods across multiple
-        evaluation metrics with automatic statistical testing (one-way ANOVA).
+        evaluation metrics with automatic statistical testing (Friedman test).
         Supports multiple visualization types to suit different presentation needs.
 
         Args:
@@ -444,7 +444,7 @@ class MOOPlots:
                 share y-axis range [0, 1]. If False, each metric uses optimal range.
                 Defaults to False.
             p_values (List[float], optional): P-value thresholds for significance
-                annotation in ANOVA tests. Labels show smallest threshold exceeded.
+                annotation in Friedman tests. Labels show smallest threshold exceeded.
                 Should be in ascending order. Defaults to [0.05, 0.01, 0.001, 0.0001].
 
         Returns:
@@ -556,8 +556,8 @@ class MOOPlots:
                     fliersize=4,
                 )
 
-                # Perform ANOVA test
-                p_val = f_oneway(
+                # Perform Friedman test
+                p_val = friedmanchisquare(
                     *[vals.values for moo, vals in es.groupby("MOO")["value"]]
                 ).pvalue
                 
@@ -611,8 +611,8 @@ class MOOPlots:
                     fliersize=4,
                 )
 
-                # Perform ANOVA test
-                p_val = f_oneway(
+                # Perform Friedman test
+                p_val = friedmanchisquare(
                     *[
                         vals.values
                         for moo, vals in es.groupby(self.comparison_col)["value"]
