@@ -36,7 +36,7 @@ Install uv if you haven't already. Find the installation process [here](https://
 1. **Clone the repository:**
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Novartis/moo-evaluation-framework.git
 cd moo_evaluation_framework
 ```
 
