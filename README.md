@@ -18,7 +18,7 @@ This framework provides a systematic approach to analyze MOO algorithm performan
 - **Flexible configuration**: Modular configuration system for data, analysis, and visualization
 - **Comprehensive metrics**: 15+ performance indicators including hypervolume, diversity, and novelty
 - **Publication-quality visualizations**: Box plots, radar charts, Pareto front analysis, and comparative scatter plots
-- **Statistical analysis**: Automatic ANOVA testing with significance annotation
+- **Statistical analysis**: Automatic statistical testing with significance annotation
 - **Efficient computation**: Caching and chunked processing for large datasets
 - **Extensible design**: Easy addition of custom metrics and objectives
 
@@ -212,7 +212,7 @@ Visualization generator producing publication-quality plots. Supports multiple p
 ## Visualization Types
 
 ### Box Plots (`plot_type='box_reduced'`)
-Distribution comparison across methods with ANOVA statistics.
+Distribution comparison across methods with significance statistics.
 
 ```python
 evaluator.evaluation_visual(
@@ -308,7 +308,7 @@ python -m evaluation_framework.nibrfilters --folder_path /path/to/data
 
 ## Statistical Testing
 
-All comparative plots include automatic one-way ANOVA testing with customizable significance thresholds:
+All comparative plots include automatic one-way statistical testing with customizable significance thresholds:
 
 ```python
 evaluator.evaluation_visual(
