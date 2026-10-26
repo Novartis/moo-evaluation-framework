@@ -1,7 +1,7 @@
 [project]
 name = "evaluation-framework"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Python framework for evaluating and comparing multi-objective optimization (MOO) algorithms in molecular design and drug discovery."
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
