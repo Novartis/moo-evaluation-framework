@@ -330,10 +330,10 @@ If you use this framework in your research, please cite:
 
 ```bibtex
 @article{TODO,
-  title   = {},
-  author  = {},
+  title   = {Quantifying Multi-Objective Optimization in Generative Chemistry for Molecule Design},
+  author  = {Paula Torren-Peraire, Nadine Schneider, Raquel Rodríguez-Pérez, Robin A. Fairhurst, Jessica Lanini},
   journal = {},
-  year    = {},
+  year    = {2026},
   doi     = {}
 }
 ```
